@@ -170,8 +170,9 @@
                 // more math utility functions can be found here:
                 // https://threejs.org/docs/#api/en/math/MathUtils
             }
-
-            modelReact.rotation.y = modelReact.rotation.y + 0.01;
+            if (modelReact !== undefined) {
+                modelReact.rotation.y = modelReact.rotation.y + 0.01;
+            }
 
         }
 
