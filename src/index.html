@@ -43,14 +43,14 @@
             //const modelUrl = 'https://raw.githubusercontent.com/immersive-web/webxr-samples/main/media/gltf/space/space.gltf';
             //const modelUrl = 'https://github.com/rajpradhan-deloitte/ModelFiles/blob/main/CoI.glb';
             const modelUrl = '3dmodels/CoI.gltf';
-            const modelTableUrl = '3dmodels/Table.glb';
+            const modelTableUrl = '3dmodels/react_logo_circle.gltf';
       
 			loader = new THREE.GLTFLoader();
 			loader.load(
 				modelUrl,
 				function (gltf) {
           model = gltf.scene;
-                    model.position.y = 4;
+                    model.position.x = 2;
           model.position.z = -4;
 					scene.add(model);
           console.log("Model added to scene");
