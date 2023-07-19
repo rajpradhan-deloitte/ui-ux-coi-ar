@@ -117,9 +117,9 @@
             if (modelPodium !== undefined) {
                 // valid degrees range from 0-360
                 // Once over 360 three.js will treat 360 as 0, 361 as 1, 362 as 2 and so on
-                degrees = degrees + 0.2;
-                modelPodium.rotation.y = THREE.Math.degToRad(degrees); // we convert degrees to a radian value
-
+                // degrees = degrees + 0.2;
+                // modelPodium.rotation.y = THREE.Math.degToRad(degrees); // we convert degrees to a radian value
+                modelPodium.rotation.y = modelPodium.rotation.y - 0.01;
                 // more math utility functions can be found here:
                 // https://threejs.org/docs/#api/en/math/MathUtils
             }
@@ -127,9 +127,9 @@
             if (modelCoI !== undefined) {
                 // valid degrees range from 0-360
                 // Once over 360 three.js will treat 360 as 0, 361 as 1, 362 as 2 and so on
-                degrees = degrees + 0.2;
-                modelCoI.rotation.y = THREE.Math.degToRad(degrees); // we convert degrees to a radian value
-
+                // degrees = degrees + 0.2;
+                // modelCoI.rotation.y = THREE.Math.degToRad(degrees); // we convert degrees to a radian value
+                modelCoI.rotation.y = modelCoI.rotation.y - 0.01;
                 // more math utility functions can be found here:
                 // https://threejs.org/docs/#api/en/math/MathUtils
             }
