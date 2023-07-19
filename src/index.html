@@ -15,8 +15,8 @@
         import { ARButton } from 'https://unpkg.com/three@0.126.0/examples/jsm/webxr/ARButton.js';
 
         let camera, scene, renderer;
-        let loader, loaderTable, loaderPodium, loaderCoI;
-        let model, model2, modelCoI, modelPodium;
+        let loader, loaderTable, loaderHTML, loaderCoI;
+        let model, model2, modelCoI, modelPodium, modelHtml;
 
         init();
         animate();
@@ -42,21 +42,58 @@
             // Add a GLTF model to the scene
             //const modelUrl = 'https://raw.githubusercontent.com/immersive-web/webxr-samples/main/media/gltf/space/space.gltf';
             //const modelUrl = 'https://github.com/rajpradhan-deloitte/ModelFiles/blob/main/CoI.glb';
+            const modelHtmlUrl = '3dmodels/html5/scene.gltf';
             const modelPodiumUrl = '3dmodels/podium/scene.gltf';
             const modelCoIUrl = '3dmodels/CoI.gltf';
-            const modelTableUrl = '3dmodels/react_logo_circle.gltf';
+            const modelReactUrl = '3dmodels/react_logo_circle.gltf';
 
 
 
 
             // 1. Podium model
-            loaderPodium = new THREE.GLTFLoader();
-            loaderPodium.load(
-                modelPodiumUrl,
+            //loaderPodium = new THREE.GLTFLoader();
+            //loaderPodium.load(
+            //    modelPodiumUrl,
+            //    function (gltf) {
+            //        modelPodium = gltf.scene;
+            //        modelPodium.position.set(0, 0.4, -1)
+            //        scene.add(modelPodium);
+            //        console.log("Podium Model added to scene");
+            //    },
+            //    function (xhr) {
+            //        // console.log((xhr.loaded / xhr.total * 100) + '% loaded' );
+            //    },
+            //    function (error) {
+            //        console.error(error);
+            //    }
+            //);
+
+            // 2. CoI Logo model
+            loaderCoI = new THREE.GLTFLoader();
+            loaderCoI.load(
+                modelCoIUrl,
                 function (gltf) {
-                    modelPodium = gltf.scene;
-                    modelPodium.position.set(0, 0.4, -1)
-                    scene.add(modelPodium);
+                    modelCoI = gltf.scene;
+                    modelCoI.position.set(0, 0, -1.5)
+                    scene.add(modelCoI);
+                    console.log("CoI Model added to scene");
+                },
+                function (xhr) {
+                    // console.log((xhr.loaded / xhr.total * 100) + '% loaded' );
+                },
+                function (error) {
+                    console.error(error);
+                }
+            );
+
+            // 3. HTML Logo
+            loaderHTML = new THREE.GLTFLoader();
+            loaderHTML.load(
+                modelHtmlUrl,
+                function (gltf) {
+                    modelHtml = gltf.scene;
+                    modelHtml.position.set(1, 0, -1.5)
+                    scene.add(modelHtml);
                     console.log("Podium Model added to scene");
                 },
                 function (xhr) {
@@ -67,15 +104,15 @@
                 }
             );
 
-            // 2. CoI Logo model
-            loaderCoI = new THREE.GLTFLoader();
-            loaderCoI.load(
-                modelCoIUrl,
+            // 4. React Logo
+            loaderReact = new THREE.GLTFLoader();
+            loaderReact.load(
+                modelReactUrl,
                 function (gltf) {
-                    modelCoI = gltf.scene;
-                    modelCoI.position.set(0, 0, -1)
-                    scene.add(modelCoI);
-                    console.log("CoI Model added to scene");
+                    modelReact = gltf.scene;
+                    modelReact.position.set(1, 0, -1.5)
+                    scene.add(modelReact);
+                    console.log("Podium Model added to scene");
                 },
                 function (xhr) {
                     // console.log((xhr.loaded / xhr.total * 100) + '% loaded' );
@@ -114,12 +151,12 @@
 
         function rotateModel() {
 
-            if (modelPodium !== undefined) {
+            if (modelHtml !== undefined) {
                 // valid degrees range from 0-360
                 // Once over 360 three.js will treat 360 as 0, 361 as 1, 362 as 2 and so on
                 // degrees = degrees + 0.2;
                 // modelPodium.rotation.y = THREE.Math.degToRad(degrees); // we convert degrees to a radian value
-                modelPodium.rotation.y = modelPodium.rotation.y + 0.01;
+                modelHtml.rotation.y = modelHtml.rotation.y + 0.01;
                 // more math utility functions can be found here:
                 // https://threejs.org/docs/#api/en/math/MathUtils
             }
@@ -133,6 +170,8 @@
                 // more math utility functions can be found here:
                 // https://threejs.org/docs/#api/en/math/MathUtils
             }
+
+            modelReact.rotation.y = modelReact.rotation.y + 0.01;
 
         }
 
