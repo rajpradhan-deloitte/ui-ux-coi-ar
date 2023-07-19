@@ -42,7 +42,7 @@
             // Add a GLTF model to the scene
             //const modelUrl = 'https://raw.githubusercontent.com/immersive-web/webxr-samples/main/media/gltf/space/space.gltf';
             //const modelUrl = 'https://github.com/rajpradhan-deloitte/ModelFiles/blob/main/CoI.glb';
-            const modelPodiumUrl = '3dmodels/odium/scene.gltf';
+            const modelPodiumUrl = '3dmodels/podium/scene.gltf';
             const modelCoIUrl = '3dmodels/CoI.gltf';
             const modelTableUrl = '3dmodels/react_logo_circle.gltf';
 
@@ -73,7 +73,7 @@
                 modelCoIUrl,
                 function (gltf) {
                     modelCoI = gltf.scene;
-                    modelCoI.position.set(0, 1, -1)
+                    modelCoI.position.set(0, 0.2, -1)
                     scene.add(modelCoI);
                     console.log("CoI Model added to scene");
                 },
