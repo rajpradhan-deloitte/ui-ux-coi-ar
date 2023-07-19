@@ -42,14 +42,15 @@
       // Add a GLTF model to the scene
             //const modelUrl = 'https://raw.githubusercontent.com/immersive-web/webxr-samples/main/media/gltf/space/space.gltf';
             //const modelUrl = 'https://github.com/rajpradhan-deloitte/ModelFiles/blob/main/CoI.glb';
-            const modelUrl = '3dmodels/CoI.gltf';
+            //const modelUrl = '3dmodels/CoI.gltf';
+            const modelUrl = '3dmodels/Table.glb';
       
 			loader = new THREE.GLTFLoader();
 			loader.load(
 				modelUrl,
 				function (gltf) {
           model = gltf.scene;
-          model.position.z = -10;
+          model.position.z = -3;
 					scene.add(model);
           console.log("Model added to scene");
 				},
