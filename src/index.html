@@ -55,7 +55,7 @@
                 modelPodiumUrl,
                 function (gltf) {
                     modelPodium = gltf.scene;
-                    modelPodium.position.set(0, 0, 0)
+                    modelPodium.position.set(0, -2, 0)
                     scene.add(modelPodium);
                     console.log("Podium Model added to scene");
                 },
@@ -73,7 +73,7 @@
                 modelCoIUrl,
                 function (gltf) {
                     modelCoI = gltf.scene;
-                    modelCoI.position.set(0, 0, -1)
+                    modelCoI.position.set(0, 0, 0)
                     scene.add(modelCoI);
                     console.log("CoI Model added to scene");
                 },
@@ -119,7 +119,7 @@
                 // Once over 360 three.js will treat 360 as 0, 361 as 1, 362 as 2 and so on
                 // degrees = degrees + 0.2;
                 // modelPodium.rotation.y = THREE.Math.degToRad(degrees); // we convert degrees to a radian value
-                //modelPodium.rotation.y = modelPodium.rotation.y - 0.01;
+                modelPodium.rotation.y = modelPodium.rotation.y + 0.01;
                 // more math utility functions can be found here:
                 // https://threejs.org/docs/#api/en/math/MathUtils
             }
