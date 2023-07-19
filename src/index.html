@@ -15,7 +15,7 @@
     import { ARButton } from 'https://unpkg.com/three@0.126.0/examples/jsm/webxr/ARButton.js';
     
 		let camera, scene, renderer;
-		let loader;
+		let loader, loaderTable;
     let model;
 
 		init();
@@ -42,15 +42,16 @@
       // Add a GLTF model to the scene
             //const modelUrl = 'https://raw.githubusercontent.com/immersive-web/webxr-samples/main/media/gltf/space/space.gltf';
             //const modelUrl = 'https://github.com/rajpradhan-deloitte/ModelFiles/blob/main/CoI.glb';
-            //const modelUrl = '3dmodels/CoI.gltf';
-            const modelUrl = '3dmodels/Table.glb';
+            const modelUrl = '3dmodels/CoI.gltf';
+            const modelTableUrl = '3dmodels/Table.glb';
       
 			loader = new THREE.GLTFLoader();
 			loader.load(
 				modelUrl,
 				function (gltf) {
           model = gltf.scene;
-          model.position.z = -3;
+                    model.position.y = 4;
+          model.position.z = -4;
 					scene.add(model);
           console.log("Model added to scene");
 				},
@@ -61,6 +62,23 @@
 					console.error(error);
 				}
 			);
+
+            loaderTable = new THREE.GLTFLoader();
+            loaderTable.load(
+                modelTableUrl,
+                function (gltf) {
+                    model = gltf.scene;
+                    model.position.z = -6;
+                    scene.add(model);
+                    console.log("Model added to scene");
+                },
+                function (xhr) {
+                    // console.log((xhr.loaded / xhr.total * 100) + '% loaded' );
+                },
+                function (error) {
+                    console.error(error);
+                }
+            );
 
 			document.body.appendChild(ARButton.createButton(renderer));
 
