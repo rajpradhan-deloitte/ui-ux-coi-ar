@@ -2,75 +2,62 @@
 <html lang="en">
 
 <head>
-	<title>3D Model Animated</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-	<link type="text/css" rel="stylesheet" href="style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r126/three.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script>
+    <title>3D Model Animated</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r126/three.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script>
 </head>
 
 <body>
-	<script type="module">
-    import { ARButton } from 'https://unpkg.com/three@0.126.0/examples/jsm/webxr/ARButton.js';
-    
-		let camera, scene, renderer;
-		let loader, loaderTable;
-    let model, model2;
+    <script type="module">
+        import { ARButton } from 'https://unpkg.com/three@0.126.0/examples/jsm/webxr/ARButton.js';
 
-		init();
-		animate();
+        let camera, scene, renderer;
+        let loader, loaderTable, loaderPodium, loaderCoI;
+        let model, model2, modelCoI, modelPodium;
 
-		function init() {
-			const container = document.createElement('div');
-			document.body.appendChild(container);
+        init();
+        animate();
 
-			scene = new THREE.Scene();
+        function init() {
+            const container = document.createElement('div');
+            document.body.appendChild(container);
 
-			camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 40);
+            scene = new THREE.Scene();
 
-			renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-			renderer.setPixelRatio(window.devicePixelRatio);
-			renderer.setSize(window.innerWidth, window.innerHeight);
-			renderer.xr.enabled = true; // we have to enable the renderer for webxr
-			container.appendChild(renderer.domElement);
+            camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 40);
 
-			var light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
-			light.position.set(0.5, 1, 0.25);
-			scene.add(light);
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.xr.enabled = true; // we have to enable the renderer for webxr
+            container.appendChild(renderer.domElement);
 
-      // Add a GLTF model to the scene
+            var light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
+            light.position.set(0.5, 1, 0.25);
+            scene.add(light);
+
+            // Add a GLTF model to the scene
             //const modelUrl = 'https://raw.githubusercontent.com/immersive-web/webxr-samples/main/media/gltf/space/space.gltf';
             //const modelUrl = 'https://github.com/rajpradhan-deloitte/ModelFiles/blob/main/CoI.glb';
-            const modelUrl = '3dmodels/CoI.gltf';
+            const modelPodiumUrl = '3dmodels/odium/scene.gltf';
+            const modelCoIUrl = '3dmodels/CoI.gltf';
             const modelTableUrl = '3dmodels/react_logo_circle.gltf';
-      
-			loader = new THREE.GLTFLoader();
-			loader.load(
-				modelUrl,
-				function (gltf) {
-          model2 = gltf.scene;
-                    model2.position.x = 2;
-          model2.position.z = -4;
-					scene.add(model2);
-          console.log("Model added to scene");
-				},
-				function (xhr) {
-		      // console.log((xhr.loaded / xhr.total * 100) + '% loaded' );
-	      },
-				function (error) {
-					console.error(error);
-				}
-			);
 
-            loaderTable = new THREE.GLTFLoader();
-            loaderTable.load(
-                modelTableUrl,
+
+
+
+            // 1. Podium model
+            loaderPodium = new THREE.GLTFLoader();
+            loaderPodium.load(
+                modelPodiumUrl,
                 function (gltf) {
-                    model = gltf.scene;
-                    model.position.z = -6;
-                    scene.add(model);
-                    console.log("Model added to scene");
+                    modelPodium = gltf.scene;
+                    modelPodium.position.set(0, 0, -1)
+                    scene.add(modelPodium);
+                    console.log("Podium Model added to scene");
                 },
                 function (xhr) {
                     // console.log((xhr.loaded / xhr.total * 100) + '% loaded' );
@@ -80,52 +67,76 @@
                 }
             );
 
-			document.body.appendChild(ARButton.createButton(renderer));
+            // 2. CoI Logo model
+            loaderCoI = new THREE.GLTFLoader();
+            loaderCoI.load(
+                modelCoIUrl,
+                function (gltf) {
+                    modelCoI = gltf.scene;
+                    modelCoI.position.set(0, 1, -1)
+                    scene.add(modelCoI);
+                    console.log("CoI Model added to scene");
+                },
+                function (xhr) {
+                    // console.log((xhr.loaded / xhr.total * 100) + '% loaded' );
+                },
+                function (error) {
+                    console.error(error);
+                }
+            );
 
-			window.addEventListener('resize', onWindowResize, false);
-		}
 
-		function onWindowResize() {
-			camera.aspect = window.innerWidth / window.innerHeight;
-			camera.updateProjectionMatrix();
 
-			renderer.setSize(window.innerWidth, window.innerHeight);
-		}
 
-		function animate() {
-			renderer.setAnimationLoop(render);
-		}
 
-		function render() {
-      rotateModel();
-			renderer.render(scene, camera);
-		}
-    
-    let degrees = 0; // the angle to rotate our model
-    
-    function rotateModel() {
-      if (model !== undefined) {
-        // valid degrees range from 0-360
-        // Once over 360 three.js will treat 360 as 0, 361 as 1, 362 as 2 and so on
-        degrees = degrees + 0.2; 
-        model.rotation.y = THREE.Math.degToRad(degrees); // we convert degrees to a radian value
-        
-        // more math utility functions can be found here:
-        // https://threejs.org/docs/#api/en/math/MathUtils
-		}
+            document.body.appendChild(ARButton.createButton(renderer));
 
-        if (model2 !== undefined) {
-            // valid degrees range from 0-360
-            // Once over 360 three.js will treat 360 as 0, 361 as 1, 362 as 2 and so on
-            degrees = degrees + 0.2;
-            model2.rotation.y = THREE.Math.degToRad(degrees); // we convert degrees to a radian value
-
-            // more math utility functions can be found here:
-            // https://threejs.org/docs/#api/en/math/MathUtils
+            window.addEventListener('resize', onWindowResize, false);
         }
-    }
 
-	</script>
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            renderer.setAnimationLoop(render);
+        }
+
+        function render() {
+            rotateModel();
+            renderer.render(scene, camera);
+        }
+
+        let degrees = 0; // the angle to rotate our model
+
+        function rotateModel() {
+
+            if (modelPodium !== undefined) {
+                // valid degrees range from 0-360
+                // Once over 360 three.js will treat 360 as 0, 361 as 1, 362 as 2 and so on
+                degrees = degrees + 0.2;
+                modelPodium.rotation.y = THREE.Math.degToRad(degrees); // we convert degrees to a radian value
+
+                // more math utility functions can be found here:
+                // https://threejs.org/docs/#api/en/math/MathUtils
+            }
+
+            if (modelCoI !== undefined) {
+                // valid degrees range from 0-360
+                // Once over 360 three.js will treat 360 as 0, 361 as 1, 362 as 2 and so on
+                degrees = degrees + 0.2;
+                modelCoI.rotation.y = THREE.Math.degToRad(degrees); // we convert degrees to a radian value
+
+                // more math utility functions can be found here:
+                // https://threejs.org/docs/#api/en/math/MathUtils
+            }
+
+        }
+
+    </script>
 </body>
 
 </html>
