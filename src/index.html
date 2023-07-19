@@ -73,7 +73,7 @@
                 modelCoIUrl,
                 function (gltf) {
                     modelCoI = gltf.scene;
-                    modelCoI.position.set(0, 0.2, -1)
+                    modelCoI.position.set(0.2, 0, -1)
                     scene.add(modelCoI);
                     console.log("CoI Model added to scene");
                 },
@@ -118,7 +118,7 @@
                 // valid degrees range from 0-360
                 // Once over 360 three.js will treat 360 as 0, 361 as 1, 362 as 2 and so on
                 degrees = degrees + 0.2;
-                modelPodium.rotation.y = THREE.Math.degToRad(degrees); // we convert degrees to a radian value
+                modelPodium.rotation.z = THREE.Math.degToRad(degrees); // we convert degrees to a radian value
 
                 // more math utility functions can be found here:
                 // https://threejs.org/docs/#api/en/math/MathUtils
