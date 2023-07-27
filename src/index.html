@@ -129,7 +129,7 @@
                 function (gltf) {
                     modelCSharp = gltf.scene;
                     modelCSharp.scale.set(0.08, 0.08, 0.08);
-                    modelCSharp.position.set(-12, 0.2, -10)
+                    modelCSharp.position.set(0, 2, -1.5)
                     scene.add(modelCSharp);
                     console.log("CSharp Model added to scene");
                 },
@@ -185,7 +185,7 @@
                 // Once over 360 three.js will treat 360 as 0, 361 as 1, 362 as 2 and so on
                 // degrees = degrees + 0.2;
                  //modelCoI.rotation.y = THREE.Math.degToRad(degrees); // we convert degrees to a radian value
-                modelCoI.rotation.y = modelCoI.rotation.y + 0.01;
+                //modelCoI.rotation.y = modelCoI.rotation.y + 0.01;
                 // more math utility functions can be found here:
                 // https://threejs.org/docs/#api/en/math/MathUtils
             }
