@@ -92,7 +92,7 @@
                 modelHtmlUrl,
                 function (gltf) {
                     modelHtml = gltf.scene;
-                    modelHtml.position.set(6, 0.2, -10)
+                    modelHtml.position.set(6, -0.8, -10)
                     scene.add(modelHtml);
                     console.log("Podium Model added to scene");
                 },
@@ -184,8 +184,8 @@
                 // valid degrees range from 0-360
                 // Once over 360 three.js will treat 360 as 0, 361 as 1, 362 as 2 and so on
                 // degrees = degrees + 0.2;
-                // modelCoI.rotation.y = THREE.Math.degToRad(degrees); // we convert degrees to a radian value
-                //modelCoI.rotation.y = modelCoI.rotation.y - 0.01;
+                 //modelCoI.rotation.y = THREE.Math.degToRad(degrees); // we convert degrees to a radian value
+                modelCoI.rotation.y = modelCoI.rotation.y + 0.01;
                 // more math utility functions can be found here:
                 // https://threejs.org/docs/#api/en/math/MathUtils
             }
