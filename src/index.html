@@ -15,8 +15,8 @@
         import { ARButton } from 'https://unpkg.com/three@0.126.0/examples/jsm/webxr/ARButton.js';
 
         let camera, scene, renderer;
-        let loader, loaderTable, loaderHTML, loaderCoI, loaderReact;
-        let model, model2, modelCoI, modelPodium, modelHtml, modelReact;
+        let loader, loaderTable, loaderHTML, loaderCoI, loaderReact, loaderCSharp;
+        let model, model2, modelCoI, modelPodium, modelHtml, modelReact, modelCSharp;
 
         init();
         animate();
@@ -43,7 +43,7 @@
             //const modelUrl = 'https://raw.githubusercontent.com/immersive-web/webxr-samples/main/media/gltf/space/space.gltf';
             //const modelUrl = 'https://github.com/rajpradhan-deloitte/ModelFiles/blob/main/CoI.glb';
             const modelHtmlUrl = '3dmodels/html5/scene.gltf';
-            const modelPodiumUrl = '3dmodels/podium/scene.gltf';
+            const modelCSharpUrl = '3dmodels/CSharp/scene.gltf';
             const modelCoIUrl = '3dmodels/CoI.gltf';
             const modelReactUrl = '3dmodels/react_logo_circle.gltf';
 
@@ -92,7 +92,7 @@
                 modelHtmlUrl,
                 function (gltf) {
                     modelHtml = gltf.scene;
-                    modelHtml.position.set(6, 0.2, -8)
+                    modelHtml.position.set(6, -0.2, -10)
                     scene.add(modelHtml);
                     console.log("Podium Model added to scene");
                 },
@@ -110,9 +110,27 @@
                 modelReactUrl,
                 function (gltf) {
                     modelReact = gltf.scene;
-                    modelReact.position.set(-6, -0.2, -8)
+                    modelReact.position.set(-6, 0.2, -10)
                     scene.add(modelReact);
                     console.log("Podium Model added to scene");
+                },
+                function (xhr) {
+                    // console.log((xhr.loaded / xhr.total * 100) + '% loaded' );
+                },
+                function (error) {
+                    console.error(error);
+                }
+            );
+
+            // 4. CSharp Logo
+            loaderCSharp = new THREE.GLTFLoader();
+            loaderCSharp.load(
+                modelCSharpUrl,
+                function (gltf) {
+                    modelCSharp = gltf.scene;
+                    modelCSharp.position.set(-12, 0.2, -10)
+                    scene.add(modelCSharp);
+                    console.log("CSharp Model added to scene");
                 },
                 function (xhr) {
                     // console.log((xhr.loaded / xhr.total * 100) + '% loaded' );
@@ -172,6 +190,9 @@
             }
             if (modelReact !== undefined) {
                 modelReact.rotation.y = modelReact.rotation.y + 0.01;
+            }
+            if (modelCSharp !== undefined) {
+                modelCSharp.rotation.y = modelCSharp.rotation.y + 0.01;
             }
 
         }
